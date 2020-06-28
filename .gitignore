@@ -1,4 +1,7 @@
 .idea
 venv
 node_modules
-
+tmp_files
+!tmp_files/empty
+logs
+!logs/empty

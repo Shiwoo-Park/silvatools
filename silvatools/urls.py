@@ -20,6 +20,6 @@ from silvatools.views import MainHomeView
 
 urlpatterns = [
     path('', MainHomeView.as_view()),
-    path('jsondiff/', include('jsondiff.urls')),
+    path('jsondiff/', include('jsondiff.urls', namespace="jsondiff")),
     path('admin/', admin.site.urls),
 ]

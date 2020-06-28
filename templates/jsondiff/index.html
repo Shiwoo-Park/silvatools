@@ -1,47 +1,79 @@
 <html>
+
 <head>
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css"/>
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css"/>
 
-    <!-- Javascripts -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>
+  <!-- Javascripts -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>
 </head>
-<body>
 
-<h2>Raw output</h2>
+<body style="text-align: center">
+
+<h2>API Response JSON Diff Tool</h2>
+
+<p>
+  Input 2 urls which returns JSON response.<br/>
+  And we will show you differences between them.<br/>
+  If there's too much differences... it will take log time...
+</p>
+
+<hr/>
+
+<h3>URLs to compare</h3>
 
 <div>
-    {{ unified_diff }}
+  <b style="color: #ff0000">{{ error_msg }}</b>
+  <b style="color: #028a0f">{{ success_msg }}</b>
+
+  <form method="post" id="postForm">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit"/>
+  </form>
 </div>
 
-<h2>html2diff</h2>
+<hr/>
+
+<h3>Diff Result</h3>
 
 <div id="myDiffElement">
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        let diffString = `{{ unified_diff|safe }}`;
-        const targetElement = document.getElementById('myDiffElement');
+  function showDiffDiv() {
+    let diffString = `{{ unified_diff | safe }}`;
+    const targetElement = document.getElementById('myDiffElement');
 
-        // Diff UI Config
-        // https://github.com/rtfpessoa/diff2html#diff2htmlui-configuration
-        const configuration = {
-            inputFormat: 'json',
-            outputFormat: 'side-by-side',  // default: line-by-line
-            diffStyle: 'lines', // default: none
-            matching: 'lines', // default: none
-            synchronisedScroll: false,
-            drawFileList: true,
-            highlight: false,
-            //fileListStartVisible: true
-        };
+    // Diff UI Config
+    // https://github.com/rtfpessoa/diff2html#diff2htmlui-configuration
+    const configuration = {
+      inputFormat: 'json',
+      outputFormat: 'side-by-side',  // default: line-by-line
+      diffStyle: 'lines', // default: none
+      matching: 'lines', // default: none
+      synchronisedScroll: false,
+      drawFileList: true,
+      highlight: false,
+      //fileListStartVisible: true
+    };
 
-        const diff2htmlUi = new Diff2HtmlUI(targetElement, diffString, configuration);
-        diff2htmlUi.draw();
-        diff2htmlUi.highlightCode();
-    });
+    const diff2htmlUi = new Diff2HtmlUI(targetElement, diffString, configuration);
+    diff2htmlUi.draw();
+    diff2htmlUi.highlightCode();
+  }
+
+  function applyCss() {
+    let formElem = document.querySelector("#postForm")
+    let inputElems = formElem.querySelectorAll('input')
+    inputElems.forEach(elem => elem.style.width = "80%")
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    showDiffDiv();
+    applyCss();
+  });
 </script>
 
 </body>
