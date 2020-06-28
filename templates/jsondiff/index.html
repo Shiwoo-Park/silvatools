@@ -1,0 +1,48 @@
+<html>
+<head>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css"/>
+
+    <!-- Javascripts -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>
+</head>
+<body>
+
+<h2>Raw output</h2>
+
+<div>
+    {{ unified_diff }}
+</div>
+
+<h2>html2diff</h2>
+
+<div id="myDiffElement">
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let diffString = `{{ unified_diff|safe }}`;
+        const targetElement = document.getElementById('myDiffElement');
+
+        // Diff UI Config
+        // https://github.com/rtfpessoa/diff2html#diff2htmlui-configuration
+        const configuration = {
+            inputFormat: 'json',
+            outputFormat: 'side-by-side',  // default: line-by-line
+            diffStyle: 'lines', // default: none
+            matching: 'lines', // default: none
+            synchronisedScroll: false,
+            drawFileList: true,
+            highlight: false,
+            //fileListStartVisible: true
+        };
+
+        const diff2htmlUi = new Diff2HtmlUI(targetElement, diffString, configuration);
+        diff2htmlUi.draw();
+        diff2htmlUi.highlightCode();
+    });
+</script>
+
+</body>
+</html>

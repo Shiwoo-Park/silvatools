@@ -1,0 +1,26 @@
+{
+  "glossary": {
+    "title": "example diff",
+    "GlossDiv": {
+      "GlossList": {
+        "GlossEntry": {
+          "ID": "Silva",
+          "SortAs": "SGML",
+          "GlossTerm": "Standard Generalized Markup Language",
+          "Acronym": "SGML",
+          "Abbrev": "ISO 8879:1986",
+          "Address": "Ansan-si",
+          "GlossDef": {
+            "para": "A meta-markup language, used to create markup languages such as DocBook.",
+            "GlossSeeAlso": [
+              "GML",
+              "XML",
+              "TTL"
+            ]
+          },
+          "GlossSee": "markup"
+        }
+      }
+    }
+  }
+}
