@@ -6,3 +6,5 @@ tmp_files
 logs
 !logs/empty
 static
+
+.python-version
