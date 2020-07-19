@@ -1,4 +1,18 @@
-<h1>SilvaTools</h1>
-<ul>
-    <li><a href="/jsondiff">jsondiff</a></li>
-</ul>
+{% extends 'base/layout_bootstrap.html' %}
+{% load static %}
+
+{% block header %}
+{% endblock %}
+
+{% block container %}
+  <h1>SilvaTools</h1>
+
+  <hr/>
+  다양한 목적을 위한 실바의 온라인 도구들
+
+  <hr/>
+  <ul>
+    <li><a href="/jsondiff">1. 서로다른 API의 JSON 응답 Diff 보기</a></li>
+    <li><a href="/english">2. 영어 단어시험 생성기</a></li>
+  </ul>
+{% endblock %}

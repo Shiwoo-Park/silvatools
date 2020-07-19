@@ -1,0 +1,63 @@
+{% extends 'base/layout_bootstrap.html' %}
+{% load static %}
+
+{% block header %}
+{% endblock %}
+
+{% block container %}
+  <h3 class="page-header">영단어 시험 출제기</h3>
+
+  <div>
+    <a href="{% url 'english:index' %}">목록으로</a>
+  </div>
+
+  <hr/>
+  - Google Sheet 로부터 영단어 데이터를 불러와 시험지를 만들어 줍니다.<br/>
+  - 시트 포맷 준수: A열=Index(숫자), B열=영어(단어or숙어), C열=뜻<br/>
+  - [File > Share] 설정으로 가서 Get link 부분을 "Anyone with the link" 로 변경해줄것
+
+  <hr/>
+  <form method="post" action="{% url 'english:word_test_list' %}">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="url">Google Sheet URL</label>
+      <input type="text" class="form-control" id="url" name="url" value="{{ url }}" required="">
+      <div class="invalid-feedback">
+        Please enter your shipping address.
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <label for="startIdx">Start Index</label>
+        <input type="text" class="form-control" name="startIdx" id="startIdx" placeholder="" value="1" required="">
+        <div class="invalid-feedback">
+          Valid first name is required.
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="endIdx">End Index</label>
+        <input type="text" class="form-control" name="endIdx" id="endIdx" placeholder="" value="987654321" required="">
+        <div class="invalid-feedback">
+          Valid last name is required.
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="questionCount">Question Count</label>
+        <input type="text" class="form-control" name="questionCount" id="questionCount" placeholder="" value="40"
+               required="">
+        <div class="invalid-feedback">
+          Valid last name is required.
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+    <button class="btn btn-primary btn-sm btn-block" type="submit">생성 하기</button>
+  </form>
+
+{% endblock %}
+
+{% block footer_js %}
+{% endblock %}
