@@ -4,6 +4,7 @@ Django==2.2.14
 django-extensions==3.0.3
 djangorestframework==3.11.0
 idna==2.10
+mysqlclient==2.0.1
 pytz==2020.1
 requests==2.24.0
 six==1.15.0
