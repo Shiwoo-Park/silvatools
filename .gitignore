@@ -13,7 +13,7 @@ node_modules/
 !/logs/empty
 
 
-__pycache__
+**/__pycache__/
 .pytest_cache/
 .python-version
 

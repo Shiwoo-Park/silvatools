@@ -74,11 +74,16 @@ WSGI_APPLICATION = "silvatools.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+        "ENGINE": "django.db.backends.mysql",
+        "HOST": "127.0.0.1",
+        "NAME": "silvatools",
+        "USER": "silva",
+        "PASSWORD": "silva",
+        "CONN_MAX_AGE": 0,
+        "PORT": "3310",
+        "ATOMIC_REQUEST": True,
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
