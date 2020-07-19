@@ -15,4 +15,4 @@ services: # 이 항목 밑에 실행하려는 컨테이너 들을 정의
       - --collation-server=utf8mb4_unicode_ci
     volumes:
       - "./_init_sql/:/docker-entrypoint-initdb.d/"  # init 폴더에 sql 을 넣어두면 구동 시, 자동 실행
-      - $HOME/mysql:/var/lib/mysql # -v 옵션 (다렉토리 마운트 설정)
+      - $HOME/mysql:/var/lib/mysql # -v 옵션 (디렉토리 마운트 설정)
