@@ -8,16 +8,18 @@
   <h3 class="page-header">영단어 시험 출제기</h3>
 
   <div>
-    <a href="{% url 'english:index' %}">목록으로</a>
+    <a href="{% url 'english:index' %}">목록으로</a> | <a href="{{ url }}" target="_blank">구글 시트 단어장 (기본값)</a>
   </div>
 
   <hr/>
-  - Google Sheet 로부터 영단어 데이터를 불러와 시험지를 만들어 줍니다.<br/>
-  - 시트 포맷 준수: A열=Index(숫자), B열=영어(단어or숙어), C열=뜻<br/>
-  - [File > Share] 설정으로 가서 Get link 부분을 "Anyone with the link" 로 변경해줄것
+  <div class="alert alert-info">
+    - Google Sheet 로부터 영단어 데이터를 불러와 시험지를 만들어 줍니다.<br/>
+    - 시트 포맷 준수: A열=Index(숫자), B열=영어 (단어 or 숙어), C열=뜻<br/>
+    - [File > Share] 설정으로 가서 Get link 부분을 "Anyone with the link" 로 변경해줄것
+  </div>
 
   <hr/>
-  <form method="post" action="{% url 'english:word_test_list' %}">
+  <form id="postForm" method="post" action="{% url 'english:word_test_list' %}">
     {% csrf_token %}
 
     <div class="mb-3">
@@ -31,33 +33,58 @@
     <div class="row">
       <div class="col-md-4 mb-3">
         <label for="startIdx">Start Index</label>
-        <input type="text" class="form-control" name="startIdx" id="startIdx" placeholder="" value="1" required="">
-        <div class="invalid-feedback">
-          Valid first name is required.
-        </div>
+        <input type="text" class="form-control" name="startIdx" id="startIdx" placeholder="" value="1"
+               required="">
       </div>
       <div class="col-md-4 mb-3">
         <label for="endIdx">End Index</label>
-        <input type="text" class="form-control" name="endIdx" id="endIdx" placeholder="" value="987654321" required="">
-        <div class="invalid-feedback">
-          Valid last name is required.
-        </div>
+        <input type="text" class="form-control" name="endIdx" id="endIdx" placeholder="" value="987654321"
+               required="">
       </div>
       <div class="col-md-4 mb-3">
         <label for="questionCount">Question Count</label>
-        <input type="text" class="form-control" name="questionCount" id="questionCount" placeholder="" value="40"
-               required="">
-        <div class="invalid-feedback">
-          Valid last name is required.
-        </div>
+        <input type="text" class="form-control" name="questionCount" id="questionCount" placeholder=""
+               value="40" required="">
       </div>
     </div>
 
     <hr/>
-    <button class="btn btn-primary btn-sm btn-block" type="submit">생성 하기</button>
+
+    <div class="row">
+      <div class="col-xs-6">
+        <span class="btn btn-warning btn-sm form-control" id="btnPdfDownload">시험지 PDF 다운로드</span>
+      </div>
+      <div class="col-xs-6">
+        <span class="btn btn-primary btn-sm form-control" id="btnShowTable">시험지 테이블 뷰</span>
+      </div>
+    </div>
+
   </form>
 
 {% endblock %}
 
 {% block footer_js %}
+  <script>
+
+    const postForm = document.getElementById("postForm");
+
+    function addPdfDownloadEventListener() {
+      const btn = document.getElementById("btnPdfDownload");
+      btn.addEventListener("click", function () {
+      })
+    }
+
+    function addShowTableEventListener() {
+      const btn = document.getElementById("btnShowTable");
+      btn.addEventListener("click", function () {
+
+      })
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      console.log(postForm);
+      addPdfDownloadEventListener();
+      addShowTableEventListener();
+    })
+  </script>
 {% endblock %}

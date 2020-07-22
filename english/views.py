@@ -20,7 +20,7 @@ class EnglishWordListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["all_words"] = EngTestGenerator.generate_by_url().items()
+        context["words"] = EngTestGenerator.generate_by_url().items()
         return context
 
 
@@ -52,10 +52,11 @@ class EnglishWordTestListView(TemplateView):
             context["startIdx"] = request.POST["startIdx"]
             context["endIdx"] = request.POST["endIdx"]
             context["questionCount"] = questionCount
+            messages.success(request, "시험지 생성 성공")
 
             return self.render_to_response(context)
 
         except Exception as e:
             logger.error(traceback.format_exc())
-            messages.error(request, "시험지 생성 실패")
+            messages.error(request, f"시험지 생성 실패: {e}")
             return HttpResponseBadRequest()
