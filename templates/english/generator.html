@@ -66,23 +66,25 @@
 {% block footer_js %}
   <script>
 
-    const postForm = document.getElementById("postForm");
+    const postForm = $("#postForm");
+    const pdfDownloadUrl = "{% url 'english:pdf_generator' %}";
+    const showTableUrl = "{% url 'english:word_test_list' %}";
 
     function addPdfDownloadEventListener() {
       const btn = document.getElementById("btnPdfDownload");
       btn.addEventListener("click", function () {
+          postForm.attr('action', pdfDownloadUrl).submit();
       })
     }
 
     function addShowTableEventListener() {
       const btn = document.getElementById("btnShowTable");
       btn.addEventListener("click", function () {
-
+          postForm.attr('action', showTableUrl).submit();
       })
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-      console.log(postForm);
       addPdfDownloadEventListener();
       addShowTableEventListener();
     })

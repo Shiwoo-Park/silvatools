@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+import django_heroku
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -71,7 +71,7 @@ WSGI_APPLICATION = "silvatools.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
+# DATABASES = {'default': None}
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
@@ -84,6 +84,7 @@ DATABASES = {
         "ATOMIC_REQUEST": True,
     }
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -193,3 +194,6 @@ CACHES = {
         "LOCATION": "unique-snowflake",
     }
 }
+
+
+django_heroku.settings(locals())

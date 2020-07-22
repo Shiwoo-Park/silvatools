@@ -2,6 +2,9 @@
 
 Useful online tools made by silva
 
+[Silvatools Demo](https://silvatools.herokuapp.com/)
+
+
 ### Tools
 
 - API result (JSON) diff : Shows diff of results of GET requests from two URLs
@@ -22,7 +25,8 @@ Useful online tools made by silva
 - Install [pyenv](https://github.com/pyenv/pyenv), [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv), docker
 - [Pyenv Common Build Problems](https://github.com/pyenv/pyenv/wiki/common-build-problems) 
 - [Deploying Django](https://docs.djangoproject.com/en/3.0/howto/deployment/)
-- [Heroku - Deploy](https://devcenter.heroku.com/articles/getting-started-with-python#deploy-the-app)
+- [Heroku - Deploy python](https://devcenter.heroku.com/articles/getting-started-with-python#deploy-the-app)
+- [Heroku - Tracking git remote in heroku](https://devcenter.heroku.com/articles/git#tracking-your-app-in-git)
 
 ```shell script
 # create mysql server container
@@ -41,10 +45,13 @@ pip install -r requirements.txt
 python manage.py migrate
 
 # run server
-python -m pip install uvicorn
-uvicorn silvatools.asgi:application
+gunicorn -w 4 silvatools.asgi:application
 ```
 
-### Demo
+### Deploy to heroku
 
-[Silvatools Demo](https://gentle-river-30448.herokuapp.com/)
+```bash
+heroku apps
+heroku git:remote -a silvatools
+git push heroku master
+```
