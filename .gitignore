@@ -4,7 +4,7 @@ logs/
 venv/
 uploads/
 node_modules/
-
+staticfiles/
 
 
 /tmp_files/

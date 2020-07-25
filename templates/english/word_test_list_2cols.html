@@ -1,0 +1,90 @@
+{% extends 'base/layout_bootstrap.html' %}
+
+{% load static %}
+{% load template_filters %}
+
+{% block header %}
+{% endblock %}
+
+{% block container %}
+  <h3 class="page-header">
+    영단어 시험지 (문항수: {{ question_count }} / 범위: {{ startIdx }} ~ {{ endIdx }})
+  </h3>
+
+  <div class="no-print">
+    <hr/>
+    <a href="{% url 'english:index' %}">목록으로</a>
+    <hr/>
+  </div>
+
+  <table class="table table-striped table-bordered table-sm">
+    <tr class="bg-dark text-white">
+      <th style="width:70px" class="text-center">#</th>
+      <th>단어</th>
+      <th style="width:50%">뜻</th>
+      <th style="width:70px" class="text-center">#</th>
+      <th>단어</th>
+      <th style="width:50%">뜻</th>
+    </tr>
+    <tr>
+      <td style="width:50%" colspan="3"></td>
+      <td style="width:50%" colspan="3"></td>
+    </tr>
+    {% for word1, data1, word2, data2 in words %}
+      <tr>
+        <td style="border-bottom: 1px solid;" class="text-center">{{ forloop.counter }}</td>
+        <td style="border-bottom: 1px solid;"><a href="{{ data1.naver_dic_url }}" target="_blank">{{ word1 }}</a></td>
+        <td style="border-bottom: 1px solid;"></td>
+        <!-- another word -->
+        <td style="border-bottom: 1px solid;" class="text-center">{{ question_count | div:2 | add:forloop.counter }}</td>
+        <td style="border-bottom: 1px solid;"><a href="{{ data2.naver_dic_url }}" target="_blank">{{ word2 }}</a></td>
+        <td style="border-bottom: 1px solid;"></td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <div class="no-print">
+    <hr/>
+    <a href="{% url 'english:index' %}">목록으로</a>
+    <hr/>
+  </div>
+
+  <h3 class="page-header">
+    영단어시험 답안지 (문항수: {{ question_count }} / 범위: {{ startIdx }} ~ {{ endIdx }})
+  </h3>
+
+  <table class="table table-striped table-bordered table-sm">
+    <tr class="bg-dark text-white">
+      <th width="70px" class="text-center">#</th>
+      <th>단어</th>
+      <th>뜻</th>
+      <th width="70px" class="text-center">#</th>
+      <th>단어</th>
+      <th>뜻</th>
+    </tr>
+    <tr>
+      <td style="width:50%" colspan="3"></td>
+      <td style="width:50%" colspan="3"></td>
+    </tr>
+    {% for word1, data1, word2, data2 in words %}
+      <tr>
+        <td style="border-bottom: 1px solid;" class="text-center">{{ forloop.counter }}</td>
+        <td style="border-bottom: 1px solid;"><a href="{{ data1.naver_dic_url }}" target="_blank">{{ word1 }}</a></td>
+        <td style="border-bottom: 1px solid;">{{ data1.meaning }}</td>
+        <!-- another word -->
+        <td style="border-bottom: 1px solid;" class="text-center">{{ question_count | div:2 | add:forloop.counter }}</td>
+        <td style="border-bottom: 1px solid;"><a href="{{ data2.naver_dic_url }}" target="_blank">{{ word2 }}</a></td>
+        <td style="border-bottom: 1px solid;">{{ data2.meaning }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+
+  <div class="no-print">
+    <hr/>
+    <a href="{% url 'english:index' %}">목록으로</a>
+    <hr/>
+  </div>
+{% endblock %}
+
+{% block footer_js %}
+{% endblock %}

@@ -5,20 +5,27 @@ import traceback
 
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import FileResponse, HttpResponse, HttpResponseServerError
+from reportlab.lib import colors
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfgen import canvas
 from reportlab.pdfgen.canvas import Canvas
-from reportlab.platypus import SimpleDocTemplate
+from reportlab.platypus import SimpleDocTemplate, TableStyle
 from reportlab.platypus.tables import Table
 from rest_framework.views import APIView
 
 from services.english_test_generator import EngTestGenerator
+from reportlab.pdfbase.cidfonts import UnicodeCIDFont
 
-cm = 2.54
+inch = 72.0
+cm = inch / 2.54
+mm = cm * 0.1
+pica = 12.0
 
 
 class EnglishTestPDFGeneratorAPIView(APIView):
     def post(self, request: WSGIRequest, *args, **kwargs):
         try:
-            word_data = EngTestGenerator.generate_by_url(
+            word_data = EngTestGenerator.generate_by_google_sheet_url(
                 request.POST["url"],
                 int(request.POST["startIdx"]),
                 int(request.POST["endIdx"]),
@@ -31,15 +38,42 @@ class EnglishTestPDFGeneratorAPIView(APIView):
             response["Content-Disposition"] = "attachment; filename=somefilename.pdf"
             elements = []
 
+            # kor = Korean: 'HYSMyeongJoStd-Medium', 'HYGothic-Medium'
+
             doc = SimpleDocTemplate(
                 response,
-                rightMargin=0,
-                leftMargin=6.5 * cm,
-                topMargin=0.3 * cm,
-                bottomMargin=0,
+                rightMargin=1 * cm,
+                leftMargin=1 * cm,
+                topMargin=1 * cm,
+                bottomMargin=1 * cm,
             )
 
-            table = Table(value_list[:questionCount], colWidths=270, rowHeights=79)
+            # 테이블 스타일 지정 2,3 번째 튜플 데이터는 해당 스타일의 적용 범위를 의미함 (cell 주소)
+            # 모든 cell 에 스타일을 적용하려면 (0, 0), (-1, -1) 사용하면 됨
+            table_style = TableStyle(
+                [
+                    ("FONT", (0, 0), (-1, -1), "HYSMyeongJoStd-Medium"),
+                    ("FONTSIZE", (0, 0), (-1, -1), 20),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 15),
+                    ("INNERGRID", (0, 0), (-1, -1), 0.25, colors.black),  # 테이블 내부 구분선
+                    ("BOX", (0, 0), (-1, -1), 0.25, colors.black),  # 테이블 외곽선
+                ]
+            )
+
+            # table = Table(value_list[:questionCount], colWidths=270, rowHeights=79)
+
+            value_list = [
+                [1, "hello", "안녕하세요", 2, "dead", "죽었다"],
+                [1, "hello", "안녕하세요", 2, "dead", "죽었다"],
+            ]
+            table = Table(
+                data=value_list,
+                colWidths=[50, 100, 150, 50, 100, 150],
+                rowHeights=35,
+                hAlign="CENTER",
+            )
+            table.setStyle(table_style)
+
             elements.append(table)
             doc.build(elements)
 

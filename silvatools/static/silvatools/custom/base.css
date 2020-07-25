@@ -1,3 +1,9 @@
 .bg-lemon {
     background-color: #effd5f;
 }
+
+@media print {
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}

@@ -7,11 +7,12 @@
 {% block container %}
   <h3 class="page-header">영단어 시험 출제기</h3>
 
-  <div>
+  <div class="no-print">
+    <hr/>
     <a href="{% url 'english:index' %}">목록으로</a> | <a href="{{ url }}" target="_blank">구글 시트 단어장 (기본값)</a>
+    <hr/>
   </div>
 
-  <hr/>
   <div class="alert alert-info">
     - Google Sheet 로부터 영단어 데이터를 불러와 시험지를 만들어 줍니다.<br/>
     - 시트 포맷 준수: A열=Index(숫자), B열=영어 (단어 or 숙어), C열=뜻<br/>
@@ -49,17 +50,16 @@
     </div>
 
     <hr/>
-
-    <div class="row">
-      <div class="col-xs-6">
-        <span class="btn btn-warning btn-sm form-control" id="btnPdfDownload">시험지 PDF 다운로드</span>
-      </div>
-      <div class="col-xs-6">
-        <span class="btn btn-primary btn-sm form-control" id="btnShowTable">시험지 테이블 뷰</span>
-      </div>
-    </div>
-
   </form>
+  <div class="row">
+{#    <div class="col-sm">#}
+{#      <span class="btn btn-warning btn-sm btn-block font-weight-bold" id="btnPdfDownload">시험지 PDF 다운로드</span>#}
+{#    </div>#}
+    <div class="col-sm">
+      <span class="btn btn-primary btn-sm btn-block font-weight-bold" id="btnShowTable">시험지 생성 하기</span>
+    </div>
+  </div>
+
 
 {% endblock %}
 
@@ -73,19 +73,19 @@
     function addPdfDownloadEventListener() {
       const btn = document.getElementById("btnPdfDownload");
       btn.addEventListener("click", function () {
-          postForm.attr('action', pdfDownloadUrl).submit();
+        postForm.attr('action', pdfDownloadUrl).submit();
       })
     }
 
     function addShowTableEventListener() {
       const btn = document.getElementById("btnShowTable");
       btn.addEventListener("click", function () {
-          postForm.attr('action', showTableUrl).submit();
+        postForm.attr('action', showTableUrl).submit();
       })
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-      addPdfDownloadEventListener();
+      //addPdfDownloadEventListener();
       addShowTableEventListener();
     })
   </script>
