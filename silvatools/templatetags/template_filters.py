@@ -6,10 +6,10 @@ register = template.Library()
 
 @register.filter
 def div(value, arg):
-    '''
+    """
     Divides the value; argument is the divisor.
     Returns empty string on any error.
-    '''
+    """
     try:
         value = int(value)
         arg = int(arg)
@@ -17,4 +17,4 @@ def div(value, arg):
             return value / arg
     except:
         pass
-    return ''
+    return ""

@@ -14,15 +14,13 @@
 
   <table class="table table-striped table-bordered table-sm">
     <tr class="bg-dark text-white">
-      <th width="60px" class="text-center no-print">#</th>
       <th width="60px" class="text-center">단어ID</th>
       <th>단어</th>
       <th>뜻</th>
     </tr>
     {% for word1, data1 in words %}
       <tr>
-        <td style="border-bottom: 1px solid;" class="text-center no-print">{{ forloop.counter }}</td>
-        <td style="border-bottom: 1px solid;" class="text-center">{{ data1.idx }}</td>
+        <td style="border-bottom: 1px solid;" class="text-center" title="counter_{{ forloop.counter }}">{{ data1.idx }}</td>
         <td style="border-bottom: 1px solid;"><a href="{{ data1.naver_dic_url }}" target="_blank">{{ word1 }}</a></td>
         <td style="border-bottom: 1px solid;">{{ data1.meaning }}</td>
       </tr>
