@@ -24,5 +24,6 @@ urlpatterns = [
     path("", MainHomeView.as_view(), name="main_home"),
     path("jsondiff/", include("jsondiff.urls", namespace="jsondiff")),
     path("english/", include("english.urls", namespace="english")),
+    path("prac/", include("prac.urls", namespace="prac")),
     path("admin/", admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

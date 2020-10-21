@@ -5,7 +5,12 @@ import sys
 
 
 def main():
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "silvatools.settings.local")
+    # set default django setting module
+    # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "silvatools.settings.local")
+    os.environ.setdefault(
+        "DJANGO_SETTINGS_MODULE", "silvatools.settings.custom.local_silva"
+    )
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

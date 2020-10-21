@@ -41,6 +41,9 @@ cd $PROJ_HOME
 pyenv local silvatools
 pip install -r requirements.txt
 
+# apply db changes from specific app (optional)
+python manage.py makemigrations {DJANGO_APP}
+
 # create database
 python manage.py migrate
 
@@ -55,3 +58,7 @@ heroku apps
 heroku git:remote -a silvatools
 git push heroku master
 ```
+
+### Useful Links
+
+- Make batch script: [django-extension : runscript](https://django-extensions.readthedocs.io/en/latest/runscript.html)
