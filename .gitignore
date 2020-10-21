@@ -17,8 +17,8 @@ staticfiles/
 .pytest_cache/
 .python-version
 
-exid/settings/user/*
-!exid/settings/user/__init__.py
+exid/settings/custom/*
+!exid/settings/custom/__init__.py
 
 .idea/
 !.idea/codeStyles/Project.xml
