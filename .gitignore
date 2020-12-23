@@ -6,12 +6,13 @@ uploads/
 node_modules/
 staticfiles/
 
-
 /tmp_files/
 !/tmp_files/empty
 /logs/
 !/logs/empty
 
+/silvatools/settings/custom/
+!/silvatools/settings/custom/__init__.py
 
 **/__pycache__/
 .pytest_cache/

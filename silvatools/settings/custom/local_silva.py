@@ -5,10 +5,10 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "HOST": "127.0.0.1",
         "NAME": "silvatools",
-        "USER": "root",
-        "PASSWORD": "root",
+        "USER": "silva",
+        "PASSWORD": "silva",
         "CONN_MAX_AGE": 0,
-        "PORT": "3401",
+        "PORT": "3310",
         "ATOMIC_REQUEST": True,
     }
 }
