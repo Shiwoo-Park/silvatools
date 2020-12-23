@@ -22,14 +22,14 @@ services: # 이 항목 밑에 실행하려는 컨테이너 들을 정의
   rabbitmq:
     image: "rabbitmq:3-management"
     container_name: silvatools-rabbit
-    hostname: silvatools-rabbitmq
+    hostname: silvatools-rabbit
     #restart: always
     environment:
       RABBITMQ_DEFAULT_USER: "silva"
       RABBITMQ_DEFAULT_PASS: "silva"
     ports:
       - "5680:5672"
-      - "15680:15672"
+      - "15672:15672"
     volumes:
       - ./rabbitmq/etc:/etc/rabbitmq
       - ./rabbitmq/logs:/var/log/rabbitmq/log

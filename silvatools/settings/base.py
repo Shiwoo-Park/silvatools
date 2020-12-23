@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "django_celery_results",
     "silvatools",
     "prac.apps.PracConfig",
+    "spider.apps.SpiderConfig",
 ]
 
 MIDDLEWARE = [
@@ -125,50 +127,31 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = ()
 
 LOGGING = {
-    "disable_existing_loggers": False,
     "version": 1,
+    "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
             "format": "%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"
         },
-        "simple": {"format": "[%(levelname)s]\t(%(asctime)s) %(message)s"},
+        "simple": {
+            "format": "[%(levelname)s] %(message)s\n  Log from: %(pathname)s (%(lineno)d)"
+        },
         "custom": {
             "format": "[%(levelname)s] (%(asctime)s) %(filename)s(%(lineno)d): %(message)s"
         },
     },
     "handlers": {
-        "base": {  # 기본 로깅
+        "file": {
             "level": "DEBUG",
             "class": "logging.handlers.WatchedFileHandler",
-            "filename": "logs/daily.log",
+            "filename": "logs/app.log",
             "formatter": "custom",
             "encoding": "utf-8",
         },
-        "console": {  # log messages to terminal
+        "console": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
             "formatter": "simple",
-        },
-        "script": {  # 모든 스크립트 로그 by "runscript" command
-            "level": "DEBUG",
-            "class": "logging.handlers.WatchedFileHandler",
-            "filename": "logs/scripts.log",
-            "formatter": "custom",
-            "encoding": "utf-8",
-        },
-        "request": {  # 모든 요청 URL 과 입력 Param 을 남긴다
-            "level": "DEBUG",
-            "class": "logging.handlers.WatchedFileHandler",
-            "filename": "logs/requests.log",
-            "formatter": "simple",
-            "encoding": "utf-8",
-        },
-        "redis": {  # 모든 Redis 관련 Read & Write 기록
-            "level": "DEBUG",
-            "class": "logging.handlers.WatchedFileHandler",
-            "filename": "logs/redis.log",
-            "formatter": "simple",
-            "encoding": "utf-8",
         },
     },
     "loggers": {
@@ -176,21 +159,18 @@ LOGGING = {
             # this sets root level logger to log debug and higher level
             # logs to console. All other loggers inherit settings from
             # root level logger.
-            "level": "DEBUG",
-            "handlers": ["console", "base"],
-            "propagate": False,  # this tells logger to send logging message
-            # to its parent (will send if set to True)
-        },
-        "django.template": {"level": "INFO", "handlers": ["console"]},
-        "django.utils.autoreload": {"level": "INFO", "handlers": ["console"]},
-        "django": {
-            "level": "DEBUG",
-            "handlers": ["console", "base"],
+            "level": "WARNING",
+            "handlers": ["console", "file"],
+            # this tells logger to send logging message to its parent
+            # (will send if set to True)
             "propagate": False,
         },
-        "scripts": {"level": "DEBUG", "handlers": ["script"], "propagate": False},
-        "request": {"level": "DEBUG", "handlers": ["request"], "propagate": False},
-        "redis": {"level": "DEBUG", "handlers": ["redis"], "propagate": False},
+        "requests": {"level": "DEBUG"},
+        "stripe": {"level": "WARNING"},
+        "django": {"level": "DEBUG", "propagate": True},
+        "django.db.backends": {"level": "DEBUG"},
+        "django.utils": {"level": "INFO"},
+        "django.template": {"level": "ERROR"},
     },
 }
 
@@ -202,3 +182,21 @@ CACHES = {
 }
 
 django_heroku.settings(locals())
+
+
+# celery configuration
+# https://docs.celeryproject.org/en/latest/userguide/configuration.html
+CELERY_BROKER_URL = os.getenv(
+    "SILVATOOLS_CELERY_BROKER_URL", "amqp://silva:silva@127.0.0.1:5680//"
+)
+CELERY_RESULT_BACKEND = "django-db"
+# CELERY_RESULT_BACKEND = 'django-cache'
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_TASK_DEFAULT_QUEUE = "celery_silvatools"
+CELERY_BROKER_TRANSPORT_OPTIONS = {
+    "max_retries": 3,
+    "interval_start": 0,
+    "interval_step": 0.2,
+    "interval_max": 0.5,
+}
