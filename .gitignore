@@ -45,4 +45,3 @@ celerybeat.pid
 *.pot
 *.pyc
 webpack-stats.json
-package-lock.json
