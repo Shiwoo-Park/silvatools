@@ -1,20 +1,31 @@
+# python manage.py runscript create_prac_data
+import random
+
 from prac.models import Reporter, Article
 from datetime import date
 
 
 def run():
     # Reporter data
-    r = Reporter.objects.create(
+    r1 = Reporter.objects.create(
         first_name="John", last_name="Smith", email="john@example.com"
     )
     r2 = Reporter.objects.create(
         first_name="Paul", last_name="Jones", email="paul@example.com"
     )
+    r3 = Reporter.objects.create(
+        first_name="Park", last_name="Silva", email="silva@example.com"
+    )
+    reporters = [r1, r2, r3]
 
     # Article data (belongs to reporter)
-    a = Article.objects.create(
-        id=None, headline="This is a test", pub_date=date(2005, 7, 27), reporter=r
-    )
-    a2 = Article.objects.create(
-        id=None, headline="This is a test22222", pub_date=date(2005, 7, 27), reporter=r
-    )
+    article_count = 10
+    for i in range(article_count):
+        Article.objects.create(
+            id=None,
+            headline=f"This is a test headline {i}",
+            pub_date=date(
+                random.randint(1980, 2020), random.randint(1, 12), random.randint(1, 28)
+            ),
+            reporter=reporters[random.randint(0, 2)],
+        )

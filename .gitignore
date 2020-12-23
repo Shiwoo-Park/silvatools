@@ -13,6 +13,8 @@ staticfiles/
 
 /silvatools/settings/custom/
 !/silvatools/settings/custom/__init__.py
+/mysql
+/rabbitmq
 
 **/__pycache__/
 .pytest_cache/
