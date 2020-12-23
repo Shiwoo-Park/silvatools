@@ -17,7 +17,7 @@ services: # 이 항목 밑에 실행하려는 컨테이너 들을 정의
       #- --default-authentication-plugin=mysql_native_password
     volumes:
       - "./_init_sql/:/docker-entrypoint-initdb.d/"  # init 폴더에 sql 을 넣어두면 구동 시, 자동 실행
-      - ./mysql/silvatools:/var/lib/mysql # -v 옵션 (디렉토리 마운트 설정)
+      - ./mysql:/var/lib/mysql # -v 옵션 (디렉토리 마운트 설정)
 
   rabbitmq:
     image: "rabbitmq:3-management"
@@ -33,6 +33,7 @@ services: # 이 항목 밑에 실행하려는 컨테이너 들을 정의
     volumes:
       - ./rabbitmq/etc:/etc/rabbitmq
       - ./rabbitmq/logs:/var/log/rabbitmq/log
+      - ./rabbitmq/data:/var/lib/rabbitmq/mnesia/rabbit@silvatools-rabbitmq
 
   redis:
     image: "redis:3.2.11"
