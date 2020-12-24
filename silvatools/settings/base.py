@@ -174,6 +174,7 @@ LOGGING = {
     },
 }
 
+REDIS_URL = os.environ.get("SILVATOOLS_REDIS_URL", "redis://localhost:6380/0")
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
@@ -182,7 +183,6 @@ CACHES = {
 }
 
 django_heroku.settings(locals())
-
 
 # celery configuration
 # https://docs.celeryproject.org/en/latest/userguide/configuration.html
@@ -194,6 +194,11 @@ CELERY_RESULT_BACKEND = "django-db"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_TASK_DEFAULT_QUEUE = "celery_silvatools"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_IGNORE_RESULT = False
+CELERY_ENABLE_UTC = False
+CELERY_TIMEZONE = "Asia/Seoul"
+# CELERY_IMPORTS = ("silvatools.tasks",)
 CELERY_BROKER_TRANSPORT_OPTIONS = {
     "max_retries": 3,
     "interval_start": 0,

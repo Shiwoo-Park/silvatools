@@ -19,7 +19,7 @@ def run():
     reporters = [r1, r2, r3]
 
     # Article data (belongs to reporter)
-    article_count = 10
+    article_count = 30
     for i in range(article_count):
         Article.objects.create(
             id=None,
